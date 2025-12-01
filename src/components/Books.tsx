@@ -12,7 +12,7 @@ export const Books = () => {
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.3 }}
         className="mb-12 text-center md:text-left"
       >
         <h2 className="text-4xl md:text-6xl font-semibold tracking-tight mb-2 text-foreground">published.</h2>
@@ -29,7 +29,7 @@ export const Books = () => {
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             whileHover={{ y: -4, transition: { duration: 0.2 } }}
-            transition={{ delay: index * 0.1 + 0.3, duration: 0.6 }}
+            transition={{ delay: index * 0.05 + 0.1, duration: 0.3 }}
             className="flex items-start gap-6 p-6 rounded-2xl bg-zinc-50 dark:bg-zinc-900 border border-zinc-200 dark:border-zinc-800 hover:shadow-lg transition-colors duration-300 group relative overflow-hidden"
           >
             <div className="absolute top-0 right-0 p-4 opacity-0 group-hover:opacity-100 transition-opacity duration-300">

@@ -29,7 +29,7 @@ export const Projects = () => {
       <motion.div
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
-        transition={{ duration: 0.8 }}
+        transition={{ duration: 0.3 }}
         className="mb-8 md:mb-12 w-full flex justify-between items-end"
       >
         <div>
@@ -58,7 +58,7 @@ export const Projects = () => {
       <div className="relative w-screen md:w-full left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0">
         <div 
             ref={containerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 pl-6 pr-16 md:px-0 no-scrollbar"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 pl-6 pr-16 md:px-0 no-scrollbar [mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)] md:[mask-image:linear-gradient(to_right,black,black_calc(100%-40px),transparent)]"
             style={{ scrollBehavior: "smooth" }}
         >
             {portfolioData.projects.map((project, index) => (
@@ -66,18 +66,18 @@ export const Projects = () => {
                 key={index}
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: index * 0.1, duration: 0.5 }}
+                transition={{ delay: index * 0.05, duration: 0.3 }}
                 className="snap-center shrink-0 w-[85vw] md:w-[45%] lg:w-[32%]"
             >
                 <a
                 href={project.link}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="group block h-full bg-zinc-50 dark:bg-zinc-900 rounded-3xl p-8 hover:shadow-xl transition-all duration-500 border border-zinc-200 dark:border-zinc-800 flex flex-col justify-between min-h-[320px]"
+                className="group block h-full bg-zinc-50 dark:bg-zinc-900 rounded-3xl p-8 hover:shadow-xl transition-all duration-300 border border-zinc-200 dark:border-zinc-800 flex flex-col justify-between min-h-[320px]"
                 >
                 <div>
             <div className="flex justify-between items-start mb-8">
-                <div className="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-all duration-500 group-hover:scale-110">
+                <div className="w-12 h-12 rounded-full bg-white dark:bg-zinc-800 shadow-sm flex items-center justify-center group-hover:bg-blue-50 dark:group-hover:bg-blue-900/20 transition-all duration-300 group-hover:scale-110">
                     <div className="text-zinc-400 dark:text-zinc-500 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                         {getProjectIcon(project.category)}
                     </div>

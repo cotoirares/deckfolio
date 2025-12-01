@@ -12,6 +12,7 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
   const touchStartY = useRef<number | null>(null);
+  const touchStartTime = useRef<number | null>(null);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -63,13 +64,17 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
 
   const handleTouchStart = useCallback((e: TouchEvent) => {
     touchStartY.current = e.touches[0].clientY;
+    touchStartTime.current = Date.now();
   }, []);
 
   const handleTouchEnd = useCallback((e: TouchEvent) => {
-    if (touchStartY.current === null) return;
+    if (touchStartY.current === null || touchStartTime.current === null) return;
 
     const touchEndY = e.changedTouches[0].clientY;
     const deltaY = touchStartY.current - touchEndY;
+    const timeElapsed = Date.now() - touchStartTime.current;
+    const velocity = Math.abs(deltaY) / timeElapsed;
+    const isFastSwipe = velocity > 0.5;
     const minSwipeDistance = 50;
 
     if (Math.abs(deltaY) < minSwipeDistance) return;
@@ -91,11 +96,11 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
     if (scrollableParent) {
         const { scrollTop, scrollHeight, clientHeight } = scrollableParent;
         if (deltaY > 0) { 
-            if (scrollTop + clientHeight >= scrollHeight - 1) {
+            if (scrollTop + clientHeight >= scrollHeight - 1 && isFastSwipe) {
                 goToSlide(activeIndex + 1);
             }
         } else {
-            if (scrollTop <= 0) {
+            if (scrollTop <= 0 && isFastSwipe) {
                 goToSlide(activeIndex - 1);
             }
         }
@@ -108,6 +113,7 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
     }
     
     touchStartY.current = null;
+    touchStartTime.current = null;
   }, [activeIndex, goToSlide]);
 
   const handleKeyDown = useCallback(
@@ -142,14 +148,14 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
           initial={{ opacity: 0, y: 20, scale: 0.98, filter: "blur(4px)" }}
           animate={{ opacity: 1, y: 0, scale: 1, filter: "blur(0px)" }}
           exit={{ opacity: 0, y: -20, scale: 0.98, filter: "blur(4px)" }}
-          transition={{ duration: 0.6, ease: [0.32, 0.72, 0, 1] }}
+          transition={{ duration: 0.3, ease: [0.32, 0.72, 0, 1] }}
           className="h-full w-full absolute top-0 left-0 flex items-center justify-center"
         >
           {slides[activeIndex]}
         </motion.div>
       </AnimatePresence>
 
-      <div className="absolute right-8 top-1/2 -translate-y-1/2 flex flex-col gap-4 z-50">
+      <div className="hidden md:flex absolute right-8 top-1/2 -translate-y-1/2 flex-col gap-4 z-50">
         {slides.map((_, idx) => (
           <button
             key={idx}
@@ -170,7 +176,7 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
-              transition={{ delay: 1.5, duration: 1 }}
+              transition={{ delay: 0.5, duration: 0.3 }}
               className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 animate-bounce"
            >
              <ChevronDown size={24} />

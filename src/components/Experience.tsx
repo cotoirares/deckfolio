@@ -12,7 +12,7 @@ export const Experience = () => {
         <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
+            transition={{ duration: 0.3 }}
             className="md:col-span-4"
         >
             <h2 className="text-4xl md:text-6xl font-semibold tracking-tight mb-4 text-foreground">my timeline.</h2>
@@ -29,7 +29,7 @@ export const Experience = () => {
                     key={index}
                     initial={{ opacity: 0, y: 30 }}
                     animate={{ opacity: 1, y: 0 }}
-                    transition={{ delay: index * 0.2 + 0.2, duration: 0.6 }}
+                    transition={{ delay: index * 0.1 + 0.1, duration: 0.3 }}
                     className="relative"
                 >
                     <div className="absolute -left-[33px] top-2 w-3 h-3 rounded-full bg-gray-300 dark:bg-zinc-700 md:hidden ring-4 ring-white dark:ring-black"></div>

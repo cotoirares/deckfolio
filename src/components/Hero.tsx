@@ -13,10 +13,10 @@ export const Hero = () => {
       <motion.div
         initial={{ scale: 0.8, opacity: 0 }}
         animate={{ scale: 1, opacity: 1 }}
-        transition={{ duration: 1, type: "spring" }}
+        transition={{ duration: 0.3, type: "spring" }}
         className="mb-8 relative"
       >
-        <div className="w-40 h-40 md:w-56 md:h-56 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-6xl shadow-sm mx-auto overflow-hidden transition-colors duration-500">
+        <div className="w-40 h-40 md:w-56 md:h-56 rounded-full bg-gray-100 dark:bg-zinc-800 flex items-center justify-center text-6xl shadow-sm mx-auto overflow-hidden transition-colors duration-300">
           <span role="img" aria-label="animoji">👨🏻‍💻</span>
         </div>
       </motion.div>
@@ -24,7 +24,7 @@ export const Hero = () => {
       <motion.h1
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.3, duration: 0.8 }}
+        transition={{ delay: 0.1, duration: 0.3 }}
         className="text-5xl md:text-8xl font-semibold tracking-tight mb-4 text-foreground"
       >
         {greeting} <span className="text-gray-400 dark:text-zinc-500 font-normal">i'm {name}.</span>
@@ -33,7 +33,7 @@ export const Hero = () => {
       <motion.h2
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.5, duration: 0.8 }}
+        transition={{ delay: 0.2, duration: 0.3 }}
         className="text-2xl md:text-4xl text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-purple-600 font-medium mb-6"
       >
         {title}
@@ -42,7 +42,7 @@ export const Hero = () => {
       <motion.p
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.7, duration: 0.8 }}
+        transition={{ delay: 0.3, duration: 0.3 }}
         className="text-xl text-gray-500 dark:text-zinc-400 max-w-2xl mx-auto font-light leading-relaxed"
       >
         {description}

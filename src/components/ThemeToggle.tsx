@@ -6,7 +6,7 @@ import { useTheme } from "next-themes";
 import { motion, AnimatePresence } from "framer-motion";
 
 export function ThemeToggle() {
-  const { theme, setTheme } = useTheme();
+  const { theme, resolvedTheme, setTheme } = useTheme();
   const [mounted, setMounted] = React.useState(false);
   const [showQuote, setShowQuote] = React.useState(false);
 
@@ -15,7 +15,7 @@ export function ThemeToggle() {
   }, []);
 
   const toggleTheme = () => {
-    const newTheme = theme === "light" ? "dark" : "light";
+    const newTheme = resolvedTheme === "light" ? "dark" : "light";
     setTheme(newTheme);
     
     if (newTheme === "dark") {
@@ -34,23 +34,23 @@ export function ThemeToggle() {
     <>
       <motion.button
         onClick={toggleTheme}
-        className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-white/80 dark:bg-zinc-800/80 backdrop-blur-md shadow-lg flex items-center justify-center border border-gray-200 dark:border-zinc-700 transition-colors hover:scale-105 active:scale-95"
+        className="fixed bottom-8 right-8 z-50 w-12 h-12 rounded-full bg-zinc-800 shadow-xl flex items-center justify-center border border-zinc-700 transition-colors hover:scale-105 active:scale-95"
         whileTap={{ scale: 0.9 }}
         initial={{ opacity: 0, scale: 0.8 }}
         animate={{ opacity: 1, scale: 1 }}
       >
         <AnimatePresence mode="wait" initial={false}>
           <motion.div
-            key={theme}
+            key={resolvedTheme}
             initial={{ y: -20, opacity: 0, rotate: -90 }}
             animate={{ y: 0, opacity: 1, rotate: 0 }}
             exit={{ y: 20, opacity: 0, rotate: 90 }}
             transition={{ duration: 0.2 }}
           >
-            {theme === "dark" ? (
-              <Moon size={20} className="text-white" />
+            {resolvedTheme === "dark" ? (
+              <Sun size={20} className="text-white" />
             ) : (
-              <Sun size={20} className="text-black" />
+              <Moon size={20} className="text-white" />
             )}
           </motion.div>
         </AnimatePresence>
@@ -62,7 +62,7 @@ export function ThemeToggle() {
             initial={{ opacity: 0, y: 20, x: 20 }}
             animate={{ opacity: 1, y: 0, x: 0 }}
             exit={{ opacity: 0, y: 10 }}
-            transition={{ duration: 0.5, type: "spring" }}
+            transition={{ duration: 0.3, type: "spring" }}
             className="fixed bottom-24 right-8 z-40 max-w-xs md:max-w-md pointer-events-none"
           >
             <div className="bg-zinc-900/90 backdrop-blur text-white p-4 rounded-2xl shadow-2xl border border-zinc-800">
