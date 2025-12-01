@@ -13,7 +13,7 @@ export const Books = () => {
         initial={{ opacity: 0, x: -20 }}
         animate={{ opacity: 1, x: 0 }}
         transition={{ duration: 0.3 }}
-        className="mb-12 text-center md:text-left"
+        className="mb-12 text-left"
       >
         <h2 className="text-4xl md:text-6xl font-semibold tracking-tight mb-2 text-foreground">published.</h2>
         <p className="text-xl text-gray-500 dark:text-zinc-400">books i contributed to.</p>
