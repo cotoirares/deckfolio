@@ -8,8 +8,10 @@ interface SlideLayoutProps {
 
 export const SlideLayout: React.FC<SlideLayoutProps> = ({ children, className }) => {
   return (
-    <div className={cn("w-full max-w-6xl mx-auto px-6 md:px-12 py-12 md:py-24 h-full flex flex-col justify-center", className)}>
-      {children}
+    <div className="h-full w-full overflow-y-auto overflow-x-hidden no-scrollbar">
+      <div className={cn("w-full max-w-6xl mx-auto px-6 md:px-12 pr-16 md:pr-12 py-12 md:py-24 min-h-full flex flex-col justify-center", className)}>
+        {children}
+      </div>
     </div>
   );
 };

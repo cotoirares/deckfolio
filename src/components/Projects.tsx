@@ -58,7 +58,7 @@ export const Projects = () => {
       <div className="relative w-screen md:w-full left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0">
         <div 
             ref={containerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 px-6 md:px-0 no-scrollbar"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 pl-6 pr-16 md:px-0 no-scrollbar"
             style={{ scrollBehavior: "smooth" }}
         >
             {portfolioData.projects.map((project, index) => (

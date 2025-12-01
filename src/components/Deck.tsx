@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, useRef } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { ChevronDown } from "lucide-react";
 
@@ -11,6 +11,7 @@ interface DeckProps {
 export const Deck: React.FC<DeckProps> = ({ slides }) => {
   const [activeIndex, setActiveIndex] = useState(0);
   const [isAnimating, setIsAnimating] = useState(false);
+  const touchStartY = useRef<number | null>(null);
 
   const goToSlide = useCallback(
     (index: number) => {
@@ -25,6 +26,30 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
 
   const handleWheel = useCallback(
     (e: WheelEvent) => {
+      let target = e.target as HTMLElement;
+      let isScrollable = false;
+
+      while (target && target !== document.body) {
+        const style = window.getComputedStyle(target);
+        const overflowY = style.overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && target.scrollHeight > target.clientHeight) {
+          if (e.deltaY > 0) { // scrolling down
+             if (target.scrollTop + target.clientHeight < target.scrollHeight - 1) {
+               isScrollable = true;
+             }
+          } else { // scrolling up
+             if (target.scrollTop > 0) {
+               isScrollable = true;
+             }
+          }
+          if (isScrollable) break;
+        }
+        if (target.parentElement) target = target.parentElement;
+        else break;
+      }
+
+      if (isScrollable) return;
+
       if (Math.abs(e.deltaY) > 20) {
         if (e.deltaY > 0) {
           goToSlide(activeIndex + 1);
@@ -35,6 +60,55 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
     },
     [activeIndex, goToSlide]
   );
+
+  const handleTouchStart = useCallback((e: TouchEvent) => {
+    touchStartY.current = e.touches[0].clientY;
+  }, []);
+
+  const handleTouchEnd = useCallback((e: TouchEvent) => {
+    if (touchStartY.current === null) return;
+
+    const touchEndY = e.changedTouches[0].clientY;
+    const deltaY = touchStartY.current - touchEndY;
+    const minSwipeDistance = 50;
+
+    if (Math.abs(deltaY) < minSwipeDistance) return;
+
+    let target = e.target as HTMLElement;
+    let scrollableParent: HTMLElement | null = null;
+
+    while (target && target !== document.body) {
+        const style = window.getComputedStyle(target);
+        const overflowY = style.overflowY;
+        if ((overflowY === 'auto' || overflowY === 'scroll') && target.scrollHeight > target.clientHeight) {
+            scrollableParent = target;
+            break;
+        }
+        if (target.parentElement) target = target.parentElement;
+        else break;
+    }
+
+    if (scrollableParent) {
+        const { scrollTop, scrollHeight, clientHeight } = scrollableParent;
+        if (deltaY > 0) { 
+            if (scrollTop + clientHeight >= scrollHeight - 1) {
+                goToSlide(activeIndex + 1);
+            }
+        } else {
+            if (scrollTop <= 0) {
+                goToSlide(activeIndex - 1);
+            }
+        }
+    } else {
+        if (deltaY > 0) {
+            goToSlide(activeIndex + 1);
+        } else {
+            goToSlide(activeIndex - 1);
+        }
+    }
+    
+    touchStartY.current = null;
+  }, [activeIndex, goToSlide]);
 
   const handleKeyDown = useCallback(
     (e: KeyboardEvent) => {
@@ -50,11 +124,15 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
   useEffect(() => {
     window.addEventListener("wheel", handleWheel, { passive: false });
     window.addEventListener("keydown", handleKeyDown);
+    window.addEventListener("touchstart", handleTouchStart, { passive: true });
+    window.addEventListener("touchend", handleTouchEnd);
     return () => {
       window.removeEventListener("wheel", handleWheel);
       window.removeEventListener("keydown", handleKeyDown);
+      window.removeEventListener("touchstart", handleTouchStart);
+      window.removeEventListener("touchend", handleTouchEnd);
     };
-  }, [handleWheel, handleKeyDown]);
+  }, [handleWheel, handleKeyDown, handleTouchStart, handleTouchEnd]);
 
   return (
     <div className="h-screen w-full overflow-hidden bg-background relative">
