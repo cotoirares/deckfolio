@@ -177,7 +177,7 @@ export const Deck: React.FC<DeckProps> = ({ slides }) => {
               animate={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ delay: 0.5, duration: 0.3 }}
-              className="absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 animate-bounce"
+              className="hidden md:block absolute bottom-8 left-1/2 -translate-x-1/2 text-gray-400 animate-bounce"
            >
              <ChevronDown size={24} />
            </motion.div>
