@@ -58,7 +58,7 @@ export const Projects = () => {
       <div className="relative w-screen md:w-full left-1/2 -translate-x-1/2 md:left-auto md:translate-x-0">
         <div 
             ref={containerRef}
-            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 pl-6 pr-16 md:px-0 no-scrollbar [mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)] md:[mask-image:linear-gradient(to_right,black,black_calc(100%-40px),transparent)]"
+            className="flex overflow-x-auto snap-x snap-mandatory gap-6 w-full pb-12 pt-4 pl-6 pr-16 md:px-0 no-scrollbar [mask-image:linear-gradient(to_right,transparent,black_12px,black_calc(100%-12px),transparent)] md:[mask-image:linear-gradient(to_right,transparent,black_40px,black_calc(100%-40px),transparent)]"
             style={{ scrollBehavior: "smooth" }}
         >
             {portfolioData.projects.map((project, index) => (
